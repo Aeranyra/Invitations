@@ -1,0 +1,3065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#11182B">
+  <title>Our Story Isn't Finished Yet</title>
+  <meta name="description" content="A little invitation for my sunshine.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%9E%EF%B8%8F%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap&text=%E6%81%8B%E3%81%AF%E3%81%A4%E3%81%A5%E3%81%8F%E3%82%88%E3%81%A9%E3%81%93%E3%81%BE%E3%81%A7%E3%82%82">
+  <style>
+/* =========================================================
+   Our Story Isn't Finished Yet — for PokéBall, from Cariño
+   ========================================================= */
+
+:root {
+  --midnight: #11182B;
+  --deep: #202B46;
+  --dusty: #71809D;
+  --rose: #A98291;
+  --ivory: #EEE6D8;
+  --gold: #C9AA70;
+  --peach: #C99D8D;
+
+  /* inks used on the ivory ticket paper (darker, for legible contrast) */
+  --ink: #2b2a3c;
+  --ink-soft: #6c6472;
+  --gold-ink: #8a6b35;
+  --rose-ink: #8f6476;
+
+  --serif: "Cormorant Garamond", "Cormorant", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --type: "Courier Prime", "Courier New", ui-monospace, Menlo, monospace;
+  --jp: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "MS Mincho", serif;
+
+  --ease: cubic-bezier(.22, .61, .36, 1);
+  --paper:
+    radial-gradient(130% 90% at 25% 15%, #f6efe3 0%, #EEE6D8 48%, #e2d6c1 100%);
+  --paper-grain:
+    repeating-linear-gradient(0deg, rgba(120, 95, 60, .028) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120, 95, 60, .018) 0 1px, transparent 1px 4px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: hidden; }
+html, body { margin: 0; min-height: 100%; }
+
+body {
+  background: var(--midnight);
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+button { font: inherit; color: inherit; }
+em { font-style: italic; }
+strong { font-weight: 600; }
+
+/* ---------------------------------------------------------
+   Atmosphere
+   --------------------------------------------------------- */
+.atmosphere { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.atmosphere > * { position: absolute; inset: 0; }
+
+.bg-night {
+  background:
+    radial-gradient(120% 70% at 50% -10%, #202B46 0%, #18213a 38%, #11182B 72%),
+    #11182B;
+}
+
+.bg-warm {
+  background:
+    radial-gradient(100% 55% at 50% 112%, rgba(201, 157, 141, .55) 0%, rgba(201, 157, 141, 0) 70%),
+    radial-gradient(70% 45% at 50% 55%, rgba(169, 130, 145, .20) 0%, rgba(169, 130, 145, 0) 70%),
+    linear-gradient(180deg, rgba(201, 170, 112, 0) 35%, rgba(201, 170, 112, .10) 100%);
+  opacity: 0;
+  transition: opacity 4s var(--ease);
+}
+body[data-stage="1"] .bg-warm { opacity: .35; }
+body[data-stage="2"] .bg-warm { opacity: .5; }
+body[data-stage="3"] .bg-warm { opacity: .62; }
+body[data-stage="4"] .bg-warm { opacity: 1; }
+
+/* projector */
+.projector { opacity: 0; transition: opacity 3.2s var(--ease); }
+body.lights .projector { opacity: 1; }
+body[data-stage="4"] .projector { opacity: .55; }
+
+.projector-source {
+  position: absolute;
+  inset: auto;
+  top: -5px; left: 50%;
+  width: 12px; height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: #fff7e6;
+  box-shadow:
+    0 0 14px 5px rgba(238, 230, 216, .55),
+    0 0 70px 26px rgba(201, 170, 112, .22);
+  animation: flicker 6s infinite;
+}
+.projector-beam {
+  inset: auto;
+  top: 0; left: 50%;
+  width: 220vmax; height: 130vh;
+  transform: translateX(-50%) rotate(0deg);
+  transform-origin: 50% 0;
+  background: conic-gradient(from 164deg at 50% 0%,
+    rgba(238, 230, 216, 0) 0deg,
+    rgba(238, 230, 216, .055) 9deg,
+    rgba(238, 230, 216, .09) 16deg,
+    rgba(238, 230, 216, .055) 23deg,
+    rgba(238, 230, 216, 0) 32deg,
+    rgba(238, 230, 216, 0) 360deg);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 45%, transparent 85%);
+          mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, .5) 45%, transparent 85%);
+  animation: sway 22s ease-in-out infinite alternate;
+}
+
+/* night city */
+.skyline {
+  inset: auto 0 0 0;
+  width: 100%;
+  height: min(24vh, 240px);
+  opacity: .8;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+          mask-image: linear-gradient(180deg, transparent 0%, #000 45%);
+}
+.skyline .bld { fill: #0c1222; }
+.skyline .win { fill: #C9AA70; opacity: .32; }
+.skyline .win.tw { animation: windowGlow 9s ease-in-out infinite; }
+
+#dust { width: 100%; height: 100%; opacity: 0; transition: opacity 3s var(--ease); }
+body.lights #dust { opacity: 1; }
+
+.vignette {
+  background: radial-gradient(ellipse at 50% 45%, rgba(0, 0, 0, 0) 45%, rgba(6, 9, 20, .7) 100%);
+}
+
+.grain {
+  inset: -50%;
+  opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.4s steps(6) infinite;
+}
+
+/* ---------------------------------------------------------
+   Floating controls
+   --------------------------------------------------------- */
+.progress {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.6s var(--ease);
+}
+body.show-progress .progress { opacity: 1; }
+.progress ol {
+  list-style: none;
+  margin: 0;
+  padding: 6px 14px;
+  display: flex;
+  gap: 14px;
+  font-family: var(--type);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(238, 230, 216, .32);
+  background: rgba(17, 24, 43, .45);
+  border: 1px solid rgba(201, 170, 112, .12);
+  border-radius: 999px;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  white-space: nowrap;
+}
+.progress li { display: flex; align-items: center; transition: color 1.2s var(--ease); }
+.progress .label {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-width 1.2s var(--ease), opacity 1.2s var(--ease);
+}
+.progress li.is-done { color: rgba(201, 170, 112, .5); }
+.progress li.is-current { color: var(--gold); }
+.progress li.is-current .label { max-width: 11em; opacity: 1; }
+@media (min-width: 760px) {
+  .progress .label { max-width: 11em; opacity: 1; }
+}
+
+.moon {
+  position: fixed;
+  top: calc(52px + env(safe-area-inset-top));
+  right: calc(14px + env(safe-area-inset-right));
+  z-index: 15;
+  width: 48px; height: 48px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 2.5s var(--ease);
+}
+body.lights .moon { opacity: .85; }
+.moon-shape {
+  position: absolute;
+  top: 13px; left: 15px;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  box-shadow: -5px 3px 0 0 var(--ivory);
+  filter: drop-shadow(0 0 6px rgba(238, 230, 216, .45));
+}
+
+.reel {
+  position: fixed;
+  left: calc(12px + env(safe-area-inset-left));
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 15;
+  width: 48px; height: 48px;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 2.5s var(--ease);
+}
+body.show-progress .reel { opacity: .5; }
+.reel svg { width: 100%; height: 100%; animation: spin 40s linear infinite; }
+
+.music {
+  position: fixed;
+  right: calc(14px + env(safe-area-inset-right));
+  bottom: calc(14px + env(safe-area-inset-bottom));
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  min-width: 46px;
+  min-height: 46px;
+  padding: 0 15px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 170, 112, .4);
+  background: rgba(17, 24, 43, .72);
+  color: var(--ivory);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+}
+.music .note { font-size: 17px; line-height: 1; color: var(--gold); }
+.music .music-label {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: var(--type);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: max-width .8s var(--ease), opacity .8s var(--ease), margin .8s var(--ease);
+}
+.music.show-label .music-label { max-width: 10em; opacity: .85; margin-left: 10px; }
+.music.is-playing .note { animation: bob 2.6s ease-in-out infinite; }
+
+.whisper {
+  position: fixed;
+  left: 50%;
+  bottom: calc(78px + env(safe-area-inset-bottom));
+  z-index: 40;
+  width: max-content;
+  max-width: min(86vw, 360px);
+  padding: 12px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(201, 170, 112, .35);
+  background: rgba(17, 24, 43, .86);
+  color: var(--ivory);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity .8s var(--ease), transform .8s var(--ease);
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+}
+.whisper.is-on { opacity: 1; transform: translate(-50%, 0); }
+.whisper:empty { padding: 0; border: 0; }
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: #090d19;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .9s var(--ease);
+}
+.curtain.is-down { opacity: 1; pointer-events: auto; }
+
+/* ---------------------------------------------------------
+   Buttons
+   --------------------------------------------------------- */
+.btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 26px;
+  border: 1px solid rgba(201, 170, 112, .45);
+  border-radius: 999px;
+  background: rgba(32, 43, 70, .55);
+  color: var(--ivory);
+  font-family: var(--type);
+  font-size: 13px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background .6s var(--ease), border-color .6s var(--ease), box-shadow .6s var(--ease), transform .25s var(--ease);
+}
+.btn:active { transform: scale(.98); }
+a.btn { text-decoration: none; }
+.btn-gold {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(201, 170, 112, .12), 0 0 26px rgba(201, 170, 112, .16);
+  animation: breathe 5s ease-in-out infinite;
+}
+.btn-ghost { background: transparent; }
+.btn-text {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: none;
+  min-height: 44px;
+  padding: 10px 14px;
+  color: rgba(238, 230, 216, .72);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 18px;
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 170, 112, .5);
+  text-underline-offset: 6px;
+  cursor: pointer;
+}
+:is(.btn, .btn-text, .moon, .reel, .music, .seal, .tiny-star):focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+}
+@media (hover: hover) {
+  .btn:hover { background: rgba(201, 170, 112, .14); border-color: var(--gold); }
+  .btn-text:hover { color: var(--ivory); }
+}
+
+/* ---------------------------------------------------------
+   Reveal helpers
+   --------------------------------------------------------- */
+.reveal, .seq {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1.6s var(--ease) var(--d, 0s), transform 1.6s var(--ease) var(--d, 0s);
+}
+.reveal.in, .seq.in { opacity: 1; transform: none; }
+
+main { position: relative; z-index: 5; overflow-x: hidden; overflow-x: clip; }
+
+/* ---------------------------------------------------------
+   0. Opening
+   --------------------------------------------------------- */
+.opening {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  text-align: center;
+  transition: opacity 1.2s var(--ease);
+}
+.opening.is-leaving { opacity: 0; }
+.opening-cards { display: grid; place-items: center; width: 100%; }
+.title-card {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 1.9s var(--ease), transform 1.9s var(--ease);
+  pointer-events: none;
+}
+.title-card.is-in { opacity: 1; transform: none; pointer-events: auto; }
+.title-card.is-out { opacity: 0; transform: translateY(-6px); pointer-events: none; }
+.title-card.is-in .reveal { opacity: 1; transform: none; }
+.opening.quick .title-card.is-in .reveal { transition-delay: 0s; }
+
+.card-small {
+  margin: 0;
+  font-family: var(--type);
+  font-size: 13px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: rgba(238, 230, 216, .72);
+}
+.card-medium {
+  margin: 0;
+  font-style: italic;
+  font-size: clamp(25px, 7vw, 36px);
+  color: rgba(238, 230, 216, .92);
+}
+.pokeball-name {
+  margin: 0;
+  font-size: clamp(50px, 15vw, 96px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: .01em;
+  color: var(--ivory);
+  text-shadow: 0 0 40px rgba(201, 170, 112, .25);
+}
+.unfinished {
+  margin: 18px 0 40px;
+  font-size: clamp(21px, 5.8vw, 28px);
+  color: rgba(238, 230, 216, .78);
+}
+.kept-note {
+  margin: 26px auto 0;
+  max-width: 300px;
+  font-size: 16px;
+  font-style: italic;
+  color: rgba(201, 170, 112, .8);
+}
+
+/* ---------------------------------------------------------
+   1. Ticket + letter
+   --------------------------------------------------------- */
+.invitation {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 76px 20px 72px;
+}
+
+.film-title {
+  text-align: center;
+  margin-bottom: 26px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 2.2s var(--ease), transform 2.2s var(--ease);
+}
+.film-title.in { opacity: 1; transform: none; }
+.film-title h1 {
+  margin: 18px 0 4px;
+  font-size: clamp(33px, 9.4vw, 50px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: .005em;
+  text-wrap: balance;
+}
+.film-title h1:focus { outline: none; }
+.subtitle {
+  margin: 0;
+  font-style: italic;
+  font-size: 20px;
+  color: rgba(238, 230, 216, .72);
+}
+
+.filmstrip {
+  position: relative;
+  height: 22px;
+  max-width: 260px;
+  margin: 0 auto;
+  background: rgba(8, 12, 24, .7);
+  border-top: 1px solid rgba(201, 170, 112, .18);
+  border-bottom: 1px solid rgba(201, 170, 112, .18);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+}
+.filmstrip::before, .filmstrip::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 4px;
+  background: repeating-linear-gradient(90deg, rgba(238, 230, 216, .28) 0 6px, transparent 6px 13px);
+  animation: filmrun 14s linear infinite;
+}
+.filmstrip::before { top: 3px; }
+.filmstrip::after { bottom: 3px; }
+
+/* ticket */
+.ticket-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  justify-content: center;
+  max-width: 360px;
+  margin: 0 auto 44px;
+}
+.ticket-stage::before {
+  content: "";
+  position: absolute;
+  inset: -22% -25%;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(201, 170, 112, .26), rgba(201, 157, 141, .09) 55%, transparent 76%);
+  opacity: 0;
+  transition: opacity 3s var(--ease);
+}
+.ticket-stage.lit::before { opacity: 1; }
+
+.ticket {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  color: var(--ink);
+  perspective: 900px;
+  filter: drop-shadow(0 18px 34px rgba(0, 0, 0, .45));
+}
+.ticket-main, .ticket-stub {
+  position: relative;
+  background-image: var(--paper-grain), var(--paper);
+  background-color: var(--ivory);
+}
+.ticket-main {
+  padding: 16px 16px 18px;
+  border-radius: 14px 14px 3px 3px;
+  overflow: hidden;
+  -webkit-mask:
+    radial-gradient(circle at 0 100%, #0000 12px, #000 12.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 12px, #000 12.5px) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle at 0 100%, #0000 12px, #000 12.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 100%, #0000 12px, #000 12.5px) right / 51% 100% no-repeat;
+}
+.ticket-stub {
+  padding: 15px 26px 16px;
+  border-radius: 3px 3px 14px 14px;
+  transform-origin: 50% 0;
+  -webkit-mask:
+    radial-gradient(circle at 0 0, #0000 12px, #000 12.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 0, #0000 12px, #000 12.5px) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle at 0 0, #0000 12px, #000 12.5px) left / 51% 100% no-repeat,
+    radial-gradient(circle at 100% 0, #0000 12px, #000 12.5px) right / 51% 100% no-repeat;
+}
+.ticket-stub::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 18px; right: 18px;
+  border-top: 2px dashed rgba(113, 128, 157, .5);
+}
+
+.ticket-inner {
+  position: relative;
+  padding: 20px 16px 16px;
+  border: 1px solid rgba(201, 170, 112, .85);
+  outline: 1px solid rgba(201, 170, 112, .35);
+  outline-offset: 3px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+.t-kicker {
+  margin: 0;
+  font-family: var(--type);
+  font-size: 12px;
+  letter-spacing: .36em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+.t-rule {
+  position: relative;
+  width: 72%;
+  height: 1px;
+  margin: 12px auto 14px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.t-rule::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 6px; height: 6px;
+  background: var(--gold);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.t-label {
+  display: block;
+  font-family: var(--type);
+  font-size: 10px;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.t-reserved { margin: 0 0 14px; }
+.t-name {
+  display: block;
+  font-size: 31px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--deep);
+}
+.t-title {
+  margin: 2px 0 2px;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--deep);
+  text-wrap: balance;
+}
+.t-jp {
+  margin: 4px 0 0;
+  font-family: var(--jp);
+  font-size: 13px;
+  letter-spacing: .2em;
+  color: var(--rose-ink);
+}
+.t-meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 14px 0 14px;
+  padding: 7px 0;
+  border-top: 1px dotted rgba(138, 107, 53, .45);
+  border-bottom: 1px dotted rgba(138, 107, 53, .45);
+  font-family: var(--type);
+  font-size: 10.5px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+.t-dot { font-size: 6px; opacity: .7; }
+.t-jp + .t-details { margin-top: 16px; }
+
+.t-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+  margin: 0;
+  text-align: left;
+}
+.t-details div { min-width: 0; }
+.t-details dt {
+  font-family: var(--type);
+  font-size: 9.5px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.t-details dd {
+  margin: 1px 0 0;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.25;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.t-status { margin-top: 16px; }
+.stamp-slot {
+  display: grid;
+  place-items: center;
+  min-height: 56px;
+  margin-top: 4px;
+}
+.stamp {
+  grid-area: 1 / 1;
+  position: relative;
+  padding: 7px 13px;
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  color: var(--rose-ink);
+  font-family: var(--type);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: rotate(-7deg);
+  mix-blend-mode: multiply;
+}
+.stamp::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  opacity: .55;
+}
+.stamp.is-in { animation: stampIn .75s cubic-bezier(.2, .9, .3, 1.25) forwards; }
+.stamp.is-in.is-out { animation: stampOut 1s var(--ease) forwards; }
+.stamp--new { color: var(--gold-ink); font-size: 13px; padding: 8px 15px; }
+
+.stub-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.stub-dress {
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.3;
+}
+.barcode {
+  flex: none;
+  width: 72px;
+  height: 26px;
+  opacity: .62;
+  background: repeating-linear-gradient(90deg,
+    var(--ink) 0 1px, transparent 1px 3px,
+    var(--ink) 3px 5px, transparent 5px 6px,
+    var(--ink) 6px 7px, transparent 7px 10px,
+    var(--ink) 10px 11px, transparent 11px 12px);
+}
+
+.ticket-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(105deg,
+    rgba(255, 240, 210, 0) 38%,
+    rgba(255, 236, 196, .7) 50%,
+    rgba(255, 240, 210, 0) 62%);
+  transform: translateX(-130%);
+}
+
+/* ticket motion */
+.ticket:not(.unfold) .ticket-main,
+.ticket:not(.unfold) .ticket-stub { opacity: 0; }
+.ticket.unfold .ticket-main { animation: unfoldMain 1.5s var(--ease) both; }
+.ticket.unfold .ticket-stub { animation: unfoldStub 1.1s var(--ease) 1.25s both; }
+.ticket.sheen .ticket-sheen { animation: sheen 2.4s var(--ease) forwards; }
+.ticket.settle { animation: settle 1.8s var(--ease); }
+
+.tiny-star {
+  position: absolute;
+  top: -22px;
+  right: -6px;
+  z-index: 2;
+  width: 44px; height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--gold);
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 2s var(--ease);
+}
+.tiny-star.in { opacity: 1; animation: twinkle 4.5s ease-in-out infinite; }
+
+/* letter */
+.letter {
+  position: relative;
+  max-width: 470px;
+  margin: 0 auto;
+  padding: 36px 26px 56px;
+  border: 1px solid rgba(201, 170, 112, .22);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(32, 43, 70, .62), rgba(17, 24, 43, .42));
+  font-size: 20px;
+  line-height: 1.72;
+}
+.letter::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(201, 170, 112, .1);
+  border-radius: 3px;
+  pointer-events: none;
+}
+.letter p { margin: 0 0 1.05em; text-wrap: pretty; }
+.letter .greet { font-size: 27px; line-height: 1.3; }
+.letter .ask { font-size: 22px; color: #f6ecdc; }
+.letter .quiet { color: rgba(238, 230, 216, .78); font-style: italic; }
+.letter .final-q { font-size: 22px; line-height: 1.45; color: #f6ecdc; margin-top: 1.4em; }
+.letter .sign { text-align: right; font-size: 23px; color: var(--gold); margin: 1.2em 0 0; }
+
+.seal {
+  position: absolute;
+  left: 50%;
+  bottom: -27px;
+  width: 54px; height: 54px;
+  padding: 13px;
+  border: 1px solid rgba(255, 236, 200, .35);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #e6cf9c 0%, #C9AA70 45%, #9c7d45 100%);
+  box-shadow:
+    inset 0 0 0 4px rgba(156, 125, 69, .55),
+    inset 0 0 0 5px rgba(255, 236, 200, .3),
+    0 4px 14px rgba(0, 0, 0, .35),
+    0 0 22px rgba(201, 170, 112, .25);
+  color: #7d6233;
+  transform: translateX(-50%);
+  cursor: pointer;
+}
+.seal svg { width: 100%; height: 100%; display: block; }
+
+.to-time {
+  text-align: center;
+  margin-top: 70px;
+}
+
+/* ---------------------------------------------------------
+   3. Our time
+   --------------------------------------------------------- */
+.time {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 84px 20px 90px;
+  text-align: center;
+}
+.time-title {
+  margin: 0 0 30px;
+  font-size: clamp(27px, 7.6vw, 38px);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+.time-title:focus { outline: none; }
+
+.choices { display: grid; gap: 16px; }
+.choice {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 22px 22px 22px 26px;
+  border: 1px solid rgba(201, 170, 112, .22);
+  border-radius: 16px;
+  background: rgba(32, 43, 70, .5);
+  text-align: left;
+  overflow: hidden;
+}
+.choice::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 18px; bottom: 18px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent, var(--gold));
+  opacity: .8;
+}
+.choice--tonight { --accent: var(--dusty); }
+.choice--another { --accent: var(--rose); }
+.choice--choose  { --accent: var(--gold); }
+.choice h3 { margin: 0; font-size: 26px; font-weight: 500; line-height: 1.2; }
+.choice p { margin: 2px 0 0; font-size: 18px; color: rgba(238, 230, 216, .74); text-wrap: balance; }
+.choice .btn { justify-self: start; }
+@media (min-width: 540px) {
+  .choice { grid-template-columns: 1fr auto; align-items: center; }
+  .choice .btn { justify-self: end; }
+}
+
+.picker {
+  margin-top: 22px;
+  padding: 26px 22px 24px;
+  border: 1px solid rgba(201, 170, 112, .4);
+  border-radius: 18px;
+  background: rgba(238, 230, 216, .05);
+  text-align: left;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+}
+.picker.in { opacity: 1; transform: none; }
+.picker h3 {
+  margin: 0 0 18px;
+  font-size: 26px;
+  font-weight: 500;
+  font-style: italic;
+  text-align: center;
+}
+.picker h3:focus { outline: none; }
+.picker-row { display: grid; gap: 14px; }
+@media (min-width: 440px) { .picker-row { grid-template-columns: 1.3fr 1fr; } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field-label {
+  font-family: var(--type);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(238, 230, 216, .62);
+}
+.field input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  padding: 10px 14px;
+  border: 1px solid rgba(113, 128, 157, .55);
+  border-radius: 12px;
+  background: rgba(17, 24, 43, .65);
+  color: var(--ivory);
+  color-scheme: dark;
+  font-family: var(--serif);
+  font-size: 20px;
+  text-align: left;
+}
+.field input::-webkit-date-and-time-value { text-align: left; }
+.field input:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-color: transparent; }
+.picker-hint {
+  min-height: 1.6em;
+  margin: 12px 0 8px;
+  font-style: italic;
+  font-size: 17px;
+  color: var(--peach);
+  text-align: center;
+}
+.picker .btn { display: flex; width: 100%; }
+
+/* ---------------------------------------------------------
+   4. Next episode
+   --------------------------------------------------------- */
+.finale {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 80px 20px 110px;
+  text-align: center;
+}
+.finale .ticket-stage { margin-bottom: 34px; }
+.date-message h2 {
+  margin: 0 0 12px;
+  font-size: clamp(36px, 10.5vw, 56px);
+  font-weight: 500;
+  line-height: 1.08;
+}
+.date-message h2:focus { outline: none; }
+.date-message p { margin: 0 0 6px; font-size: 21px; }
+.date-message .strong { font-weight: 600; }
+.date-message .sign { margin-top: 18px; font-size: 24px; font-style: italic; color: var(--gold); }
+
+/* time zones */
+.tz { margin-top: 16px; }
+.tz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+.tz-opt { position: relative; display: block; }
+.tz-opt input {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.tz-opt span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 6px 10px;
+  border: 1px solid rgba(113, 128, 157, .55);
+  border-radius: 999px;
+  font-family: var(--type);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: rgba(238, 230, 216, .65);
+  transition: border-color .4s var(--ease), background .4s var(--ease), color .4s var(--ease);
+}
+.tz-opt input:checked + span { border-color: var(--gold); background: rgba(201, 170, 112, .14); color: var(--ivory); }
+.tz-opt input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 3px; }
+.tz-preview {
+  min-height: 1.4em;
+  margin: 14px 0 0;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.4;
+  text-align: center;
+  color: rgba(238, 230, 216, .85);
+  text-wrap: balance;
+}
+.tz-preview:empty { margin: 0; min-height: 0; }
+
+/* press play together */
+.playcue {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: grid;
+  place-content: center;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(circle at 50% 45%, rgba(32, 43, 70, .94), rgba(9, 13, 25, .98));
+}
+.playcue-num {
+  margin: 0;
+  font-size: clamp(96px, 32vw, 180px);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--ivory);
+  font-variant-numeric: lining-nums;
+  text-shadow: 0 0 50px rgba(201, 170, 112, .35);
+}
+.playcue-num.tick { animation: cueTick .9s var(--ease); }
+.playcue-sub { margin: 18px 0 22px; font-style: italic; font-size: 25px; color: rgba(238, 230, 216, .88); }
+@keyframes cueTick {
+  from { opacity: .15; transform: scale(1.25); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* both clocks, right now */
+.nowclocks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: -12px auto 26px;
+}
+.nc { display: grid; justify-items: center; line-height: 1.2; }
+.nc-place {
+  font-family: var(--type);
+  font-size: 10.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(238, 230, 216, .55);
+}
+.nc-time { font-size: 24px; font-weight: 500; font-variant-numeric: lining-nums; }
+.nc-sky { font-size: 13px; color: var(--gold); min-height: 1em; }
+.nc-sep { color: var(--rose); font-size: 14px; }
+
+/* episodes */
+.episodes {
+  margin: 30px auto 0;
+  max-width: 420px;
+}
+.ep-label { margin: 0 0 12px; font-style: italic; font-size: 20px; color: rgba(238, 230, 216, .82); }
+.ep-strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding: 12px 10px;
+  border-radius: 6px;
+  background:
+    repeating-linear-gradient(90deg, rgba(238, 230, 216, .22) 0 6px, transparent 6px 12px) top 3px left 0 / 100% 4px no-repeat,
+    repeating-linear-gradient(90deg, rgba(238, 230, 216, .22) 0 6px, transparent 6px 12px) bottom 3px left 0 / 100% 4px no-repeat,
+    #0a0f1d;
+}
+.ep {
+  -webkit-appearance: none;
+  appearance: none;
+  min-height: 48px;
+  border: 1px solid rgba(113, 128, 157, .4);
+  border-radius: 4px;
+  background: rgba(32, 43, 70, .7);
+  color: rgba(238, 230, 216, .55);
+  font-family: var(--serif);
+  font-size: 21px;
+  font-variant-numeric: lining-nums;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background .5s var(--ease), color .5s var(--ease), border-color .5s var(--ease);
+}
+.ep[aria-pressed="true"] {
+  border-color: transparent;
+  background-image: var(--paper-grain), var(--paper);
+  background-color: var(--ivory);
+  color: var(--deep);
+}
+.ep.is-next { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 16px rgba(201, 170, 112, .25); }
+.ep:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ep-note { margin: 12px 0 18px; font-size: 18px; color: rgba(238, 230, 216, .85); }
+.episodes .nowclocks { margin: 0 auto; }
+
+.cal-link { margin: 16px auto 0; max-width: 300px; }
+
+/* countdown */
+.countdown {
+  margin: 38px auto 0;
+  max-width: 420px;
+  padding: 24px 16px 16px;
+  border: 1px solid rgba(201, 170, 112, .28);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(32, 43, 70, .6), rgba(17, 24, 43, .38));
+}
+.cd-label { margin: 0 0 14px; font-style: italic; font-size: 20px; color: rgba(238, 230, 216, .82); }
+.cd-clock { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.cd-unit {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 12px 2px 9px;
+  border-radius: 10px;
+  background-image: var(--paper-grain), var(--paper);
+  background-color: var(--ivory);
+  color: var(--deep);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .3);
+}
+.cd-unit::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 42%;
+  height: 1px;
+  background: rgba(32, 43, 70, .1);
+}
+.cd-num {
+  font-size: clamp(30px, 9vw, 42px);
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.cd-name {
+  margin-top: 7px;
+  font-family: var(--type);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.cd-note { margin: 0 0 2px; font-style: italic; font-size: 23px; line-height: 1.35; color: #f6ecdc; text-wrap: balance; }
+.countdown > .btn-text { margin-top: 8px; }
+.editor { margin-top: 10px; text-align: left; }
+.editor .btn { display: flex; width: 100%; }
+.sync-note { margin: 6px 0 0; font-style: italic; font-size: 16px; color: rgba(201, 170, 112, .9); }
+.sync-note:empty { display: none; }
+
+.finale-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+.finale-actions .btn { width: 100%; max-width: 320px; }
+.msg-preview {
+  width: 100%;
+  max-width: 320px;
+  padding: 14px 16px;
+  border: 1px dashed rgba(201, 170, 112, .45);
+  border-radius: 12px;
+  text-align: left;
+}
+.msg-preview-note { margin: 0 0 6px; font-style: italic; font-size: 16px; color: rgba(238, 230, 216, .7); }
+.discord-who { margin: 10px 0 0; font-style: italic; font-size: 17px; color: var(--gold); }
+.msg-preview .discord-link { display: flex; width: 100%; margin-top: 14px; }
+.msg-preview pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--type);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ivory);
+  -webkit-user-select: all;
+          user-select: all;
+}
+
+.end-credits { margin-top: 96px; }
+.end-credits .filmstrip { margin-bottom: 34px; }
+.last-line {
+  margin: 0 0 10px;
+  font-size: clamp(32px, 9vw, 48px);
+  font-weight: 500;
+  line-height: 1.12;
+  text-shadow: 0 0 36px rgba(201, 157, 141, .3);
+  text-wrap: balance;
+}
+.end-credits p { margin: 0; font-size: 21px; text-wrap: balance; color: rgba(238, 230, 216, .85); }
+.end-credits .sign { margin-top: 14px; font-style: italic; color: var(--gold); font-size: 23px; }
+
+/* ---------------------------------------------------------
+   Hidden message
+   --------------------------------------------------------- */
+.secret {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.secret-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 11, 22, .74);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity .7s var(--ease);
+}
+.secret-card {
+  position: relative;
+  max-width: 350px;
+  padding: 34px 28px 20px;
+  border-radius: 10px;
+  background-image: var(--paper-grain), var(--paper);
+  background-color: var(--ivory);
+  color: var(--ink);
+  text-align: center;
+  font-size: 20px;
+  line-height: 1.55;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .5), 0 0 40px rgba(201, 170, 112, .15);
+  opacity: 0;
+  transform: translateY(16px) scale(.97);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.secret-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(201, 170, 112, .55);
+  border-radius: 6px;
+  pointer-events: none;
+}
+.secret-card p { margin: 0 0 .8em; }
+.secret .psst { font-size: 32px; font-style: italic; color: var(--gold-ink); margin-bottom: .4em; }
+.secret .btn-text { color: var(--ink-soft); position: relative; }
+.secret.is-open .secret-backdrop { opacity: 1; }
+.secret.is-open .secret-card { opacity: 1; transform: none; }
+
+.noscript {
+  position: relative;
+  z-index: 10;
+  padding: 40vh 24px 0;
+  text-align: center;
+  font-style: italic;
+  font-size: 22px;
+}
+
+/* ---------------------------------------------------------
+   Keyframes
+   --------------------------------------------------------- */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  46% { opacity: 1; }
+  48% { opacity: .82; }
+  50% { opacity: 1; }
+  73% { opacity: .9; }
+  75% { opacity: 1; }
+}
+@keyframes sway {
+  from { transform: translateX(-50%) rotate(-3deg); }
+  to   { transform: translateX(-50%) rotate(3deg); }
+}
+@keyframes grain {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-3%, 2%); }
+  40%  { transform: translate(2%, -3%); }
+  60%  { transform: translate(-2%, -1%); }
+  80%  { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes windowGlow {
+  0%, 100% { opacity: .32; }
+  50% { opacity: .08; }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(201, 170, 112, .12), 0 0 22px rgba(201, 170, 112, .12); }
+  50%      { box-shadow: 0 0 0 1px rgba(201, 170, 112, .2),  0 0 34px rgba(201, 170, 112, .26); }
+}
+@keyframes filmrun { to { background-position: 130px 0; } }
+@keyframes twinkle {
+  0%, 100% { opacity: .45; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+@keyframes unfoldMain {
+  0%   { opacity: 0; transform: scaleY(.03) scaleX(.6); }
+  40%  { opacity: 1; transform: scaleY(.03) scaleX(1); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes unfoldStub {
+  from { opacity: 0; transform: rotateX(-95deg); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes sheen {
+  from { transform: translateX(-130%); }
+  to   { transform: translateX(130%); }
+}
+@keyframes settle {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.035); }
+  100% { transform: scale(1); }
+}
+@keyframes stampIn {
+  0%   { opacity: 0; transform: rotate(-7deg) scale(2.3); }
+  60%  { opacity: .95; transform: rotate(-7deg) scale(.95); }
+  100% { opacity: .9; transform: rotate(-7deg) scale(1); }
+}
+@keyframes stampOut {
+  from { opacity: .9; transform: rotate(-7deg) scale(1); filter: blur(0); }
+  to   { opacity: 0; transform: rotate(-7deg) scale(.9); filter: blur(3px); }
+}
+
+/* ---------------------------------------------------------
+   Laptop & desktop
+   --------------------------------------------------------- */
+@media (min-width: 900px) {
+  body { font-size: 20px; }
+
+  .invitation { max-width: 940px; padding-top: 100px; }
+  .film-title { margin-bottom: 40px; }
+  .film-title h1 { font-size: 60px; }
+  .subtitle { font-size: 22px; }
+
+  /* the ticket turns sideways, like a real cinema ticket */
+  .ticket-stage { max-width: 800px; margin-bottom: 64px; }
+  .ticket { display: flex; max-width: 780px; }
+  .ticket-main {
+    flex: 1;
+    min-width: 0;
+    padding: 18px;
+    border-radius: 14px 3px 3px 14px;
+    -webkit-mask:
+      radial-gradient(circle at 100% 0, #0000 13px, #000 13.5px) top / 100% 51% no-repeat,
+      radial-gradient(circle at 100% 100%, #0000 13px, #000 13.5px) bottom / 100% 51% no-repeat;
+            mask:
+      radial-gradient(circle at 100% 0, #0000 13px, #000 13.5px) top / 100% 51% no-repeat,
+      radial-gradient(circle at 100% 100%, #0000 13px, #000 13.5px) bottom / 100% 51% no-repeat;
+  }
+  .ticket-stub {
+    flex: none;
+    width: 168px;
+    display: flex;
+    align-items: center;
+    padding: 24px 18px;
+    border-radius: 3px 14px 14px 3px;
+    transform-origin: 0 50%;
+    -webkit-mask:
+      radial-gradient(circle at 0 0, #0000 13px, #000 13.5px) top / 100% 51% no-repeat,
+      radial-gradient(circle at 0 100%, #0000 13px, #000 13.5px) bottom / 100% 51% no-repeat;
+            mask:
+      radial-gradient(circle at 0 0, #0000 13px, #000 13.5px) top / 100% 51% no-repeat,
+      radial-gradient(circle at 0 100%, #0000 13px, #000 13.5px) bottom / 100% 51% no-repeat;
+  }
+  .ticket-stub::before {
+    top: 20px; bottom: 20px; left: 0; right: auto;
+    border-top: 0;
+    border-left: 2px dashed rgba(113, 128, 157, .5);
+  }
+  .stub-inner { flex-direction: column; justify-content: center; gap: 22px; width: 100%; text-align: center; }
+  .stub-dress { font-size: 17px; }
+  .barcode {
+    width: 30px;
+    height: 120px;
+    background: repeating-linear-gradient(0deg,
+      var(--ink) 0 1px, transparent 1px 3px,
+      var(--ink) 3px 5px, transparent 5px 6px,
+      var(--ink) 6px 7px, transparent 7px 10px,
+      var(--ink) 10px 11px, transparent 11px 12px);
+  }
+  .ticket.unfold .ticket-stub { animation-name: unfoldStubSide; }
+
+  .ticket-inner { padding: 26px 34px 20px; }
+  .t-name { font-size: 38px; }
+  .t-title { font-size: 34px; }
+  .t-jp { font-size: 14px; }
+  .t-details { grid-template-columns: repeat(3, 1fr); gap: 14px 22px; }
+  .t-details dd { font-size: 18px; }
+  .ticket--final .t-details { grid-template-columns: repeat(2, 1fr); }
+  .tiny-star { top: -26px; right: 4px; }
+
+  .letter { max-width: 640px; padding: 54px 60px 70px; font-size: 22px; }
+  .letter .greet { font-size: 30px; }
+  .letter .ask, .letter .final-q { font-size: 24px; }
+
+  /* the three choices sit side by side */
+  .time { max-width: 1000px; padding-top: 110px; }
+  .choices { grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .choice {
+    grid-template-columns: 1fr;
+    align-content: space-between;
+    justify-items: center;
+    padding: 34px 22px 26px;
+    text-align: center;
+  }
+  .choice::before { top: 0; bottom: auto; left: 30%; right: 30%; width: auto; height: 2px; }
+  .choice .btn { justify-self: center; }
+  .choice h3 { font-size: 30px; }
+  .picker { max-width: 640px; margin-left: auto; margin-right: auto; padding: 32px 36px 28px; }
+
+  .finale { max-width: 940px; padding-top: 100px; }
+  .countdown, .episodes { max-width: 580px; }
+  .cd-num { font-size: 52px; }
+  .finale-actions { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .finale-actions .btn { width: auto; min-width: 260px; }
+  .msg-preview, .finale-actions .btn-text { flex-basis: 100%; }
+  .msg-preview { max-width: 420px; }
+  .finale-actions .btn-text { flex: 0 0 auto; }
+  .finale-actions { row-gap: 14px; }
+  .finale-actions > .msg-preview { order: 3; }
+  .finale-actions > .btn-text { order: 4; width: 100%; }
+
+  .whisper { bottom: 40px; }
+}
+
+@keyframes unfoldStubSide {
+  from { opacity: 0; transform: rotateY(95deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------------------------------------------------------
+   Reduced motion
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+    transition-duration: .3s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal, .seq, .title-card, .film-title, .picker { transform: none !important; }
+}
+
+</style>
+</head>
+<body data-stage="0">
+
+  <!-- ===== Atmosphere (purely decorative) ===== -->
+  <div class="atmosphere" aria-hidden="true">
+    <div class="bg-night"></div>
+    <div class="bg-warm"></div>
+    <div class="projector">
+      <div class="projector-beam"></div>
+      <div class="projector-source"></div>
+    </div>
+    <svg class="skyline" id="skyline" viewBox="0 0 400 120" preserveAspectRatio="xMidYMax slice"></svg>
+    <canvas id="dust"></canvas>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- ===== Small floating things ===== -->
+  <nav class="progress" aria-label="Where we are">
+    <ol>
+      <li><span class="num">01</span><span class="label">&nbsp;— Ticket</span></li>
+      <li><span class="num">02</span><span class="label">&nbsp;— Invitation</span></li>
+      <li><span class="num">03</span><span class="label">&nbsp;— Our time</span></li>
+      <li><span class="num">04</span><span class="label">&nbsp;— Next episode</span></li>
+    </ol>
+  </nav>
+
+  <button class="moon" id="moon" type="button" aria-label="The little moon">
+    <span class="moon-shape"></span>
+  </button>
+
+  <button class="reel" id="reel" type="button" aria-label="A little film reel">
+    <svg viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" stroke-width="1.4"/>
+      <circle cx="20" cy="20" r="3" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="20" cy="10.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <circle cx="20" cy="29.5" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <circle cx="10.5" cy="20" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/>
+      <circle cx="29.5" cy="20" r="3.6" fill="none" stroke="currentColor" stroke-width="1.1"/>
+    </svg>
+  </button>
+
+  <button class="music" id="musicBtn" type="button" aria-pressed="false" aria-label="Music: off" hidden>
+    <span class="note" aria-hidden="true">♫</span>
+    <span class="music-label" aria-hidden="true">Music: Off</span>
+  </button>
+  <audio id="bgm" loop preload="metadata"></audio>
+
+  <div class="playcue" id="playCue" role="alert" hidden>
+    <p class="playcue-num" id="playCueNum">5</p>
+    <p class="playcue-sub" id="playCueSub">Get ready to press play</p>
+    <button class="btn-text" id="playCueClose" type="button">Close</button>
+  </div>
+
+  <div class="whisper" id="whisper" role="status" aria-live="polite"></div>
+  <div class="curtain" id="curtain" aria-hidden="true"></div>
+
+  <main id="main">
+
+    <!-- ===== 0. Opening darkness ===== -->
+    <section class="scene opening" id="opening" aria-label="Opening">
+      <div class="opening-cards">
+        <div class="title-card" data-card="1">
+          <p class="card-small">A private screening awaits.</p>
+        </div>
+        <div class="title-card" data-card="2">
+          <p class="card-medium">PokéBall, this one's for you.</p>
+        </div>
+        <div class="title-card" data-card="3">
+          <p class="pokeball-name reveal" style="--d:0s">PokéBall...</p>
+          <p class="unfinished reveal" style="--d:1.2s"><em>You left something unfinished...</em></p>
+          <div class="reveal" style="--d:2.6s">
+            <button class="btn btn-gold" id="openTicket" type="button">Open your ticket</button>
+          </div>
+          <p class="kept-note reveal" id="keptNote" style="--d:3.4s" hidden></p>
+          <div class="reveal" style="--d:3.6s">
+            <button class="btn-text" id="jumpBtn" type="button" hidden>See our countdown</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 1 + 2. Ticket and letter ===== -->
+    <section class="scene invitation" id="invitation" aria-labelledby="mainTitle" data-stage-mark="1" hidden>
+      <header class="film-title" id="filmTitle">
+        <div class="filmstrip" aria-hidden="true"></div>
+        <h1 id="mainTitle" tabindex="-1">Our Story Isn't Finished Yet</h1>
+        <p class="subtitle">A little invitation for my sunshine.</p>
+      </header>
+
+      <div class="ticket-stage" id="ticketStage">
+        <button class="tiny-star" id="tinyStar" type="button" aria-label="A tiny star">✦</button>
+
+        <article class="ticket" id="ticket" aria-label="Your ticket">
+          <div class="ticket-main">
+            <div class="ticket-sheen" aria-hidden="true"></div>
+            <div class="ticket-inner">
+              <p class="t-kicker">Private Screening</p>
+              <div class="t-rule" aria-hidden="true"></div>
+
+              <p class="t-reserved">
+                <span class="t-label">Reserved for</span>
+                <span class="t-name">PokéBall</span>
+              </p>
+
+              <span class="t-label">Title</span>
+              <h2 class="t-title">An Incurable Case of Love</h2>
+              <p class="t-jp" lang="ja">恋はつづくよどこまでも</p>
+
+              <p class="t-meta"><span>One continuation</span><span class="t-dot" aria-hidden="true">◆</span><span>No expiration</span></p>
+
+              <dl class="t-details">
+                <div><dt>Admission</dt><dd>One Sunshine</dd></div>
+                <div><dt>Time</dt><dd>Whenever you're ready</dd></div>
+                <div><dt>Seat</dt><dd>Beside me (on the call)</dd></div>
+                <div><dt>Venue</dt><dd>Two screens, one episode</dd></div>
+                <div><dt>Distance</dt><dd>Doesn't count</dd></div>
+                <div><dt>Dress code</dt><dd>Be yourself.</dd></div>
+              </dl>
+
+              <div class="t-status">
+                <span class="t-label">Status</span>
+                <div class="stamp-slot">
+                  <div class="stamp" id="stamp1"><span>To be continued...</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-stub">
+            <div class="stub-inner">
+              <span class="stub-dress">Valid in any time zone</span>
+              <span class="barcode" aria-hidden="true"></span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <article class="letter" id="letter" data-stage-mark="2" aria-label="A letter from Cariño">
+        <p class="greet reveal"><strong>Hey, sunshine.</strong></p>
+        <p class="reveal">Do you remember our drama date?</p>
+        <p class="reveal">We started watching <em>An Incurable Case of Love</em> together, but somehow, we left our little story waiting for another day.</p>
+        <p class="reveal">So...</p>
+        <p class="ask reveal"><strong>how about we continue where we left off?</strong></p>
+        <p class="quiet reveal">No fixed time.<br>No rushing.</p>
+        <p class="reveal">You choose when you're free, and I'll save a little time for us.</p>
+        <p class="reveal">There are still episodes waiting for us.</p>
+        <p class="reveal">And I'd like to watch them with you.</p>
+        <p class="final-q reveal"><strong>So, sunshine... shall we continue our little drama date?</strong></p>
+        <p class="sign reveal"><em>— Your Cariño</em></p>
+
+        <button class="seal" id="seal" type="button" aria-label="A little gold seal">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <path d="M20 9 L22.6 17.4 L31 20 L22.6 22.6 L20 31 L17.4 22.6 L9 20 L17.4 17.4 Z" fill="currentColor"/>
+          </svg>
+        </button>
+      </article>
+
+      <div class="to-time reveal">
+        <button class="btn btn-gold" id="toTime" type="button">Choose our time</button>
+      </div>
+    </section>
+
+    <!-- ===== 3. Our time ===== -->
+    <section class="scene time" id="time" aria-labelledby="timeTitle" data-stage-mark="3" hidden>
+      <h2 class="time-title reveal" id="timeTitle" tabindex="-1">When should we continue?</h2>
+      <div class="reveal">
+        <div class="nowclocks" role="group" aria-label="What time it is for each of us right now">
+          <div class="nc"><span class="nc-place">UK</span><span class="nc-time" data-zone="uk">—</span><span class="nc-sky" data-sky="uk" aria-hidden="true"></span></div>
+          <span class="nc-sep" aria-hidden="true">♡</span>
+          <div class="nc"><span class="nc-place">Malaysia</span><span class="nc-time" data-zone="my">—</span><span class="nc-sky" data-sky="my" aria-hidden="true"></span></div>
+        </div>
+      </div>
+
+      <div class="choices">
+        <div class="choice choice--tonight reveal">
+          <div class="choice-text">
+            <h3>Tonight</h3>
+            <p><em>If you're free tonight...</em></p>
+          </div>
+          <button class="btn" type="button" data-choice="tonight">Tonight?</button>
+        </div>
+
+        <div class="choice choice--another reveal">
+          <div class="choice-text">
+            <h3>Another day</h3>
+            <p><em>Whenever you feel like it.</em></p>
+          </div>
+          <button class="btn" type="button" data-choice="another">Another day</button>
+        </div>
+
+        <div class="choice choice--choose reveal">
+          <div class="choice-text">
+            <h3>You choose</h3>
+            <p><em>Pick a date and time that works for you.</em></p>
+          </div>
+          <button class="btn" type="button" data-choice="choose" id="chooseBtn" aria-expanded="false" aria-controls="picker">Let me choose</button>
+        </div>
+      </div>
+
+      <div class="picker" id="picker" hidden>
+        <h3 id="pickerTitle" tabindex="-1">Pick our next episode</h3>
+        <div class="picker-row">
+          <label class="field">
+            <span class="field-label">Date</span>
+            <input type="date" id="pickDate">
+          </label>
+          <label class="field">
+            <span class="field-label">Time</span>
+            <input type="time" id="pickTime">
+          </label>
+        </div>
+          <div class="tz" role="radiogroup" aria-label="Whose time is this?">
+            <span class="field-label">These times are in</span>
+            <div class="tz-options">
+              <label class="tz-opt"><input type="radio" name="pickZone" value="uk"><span>UK time</span></label>
+              <label class="tz-opt"><input type="radio" name="pickZone" value="my"><span>Malaysia time</span></label>
+            </div>
+          </div>
+        <p class="tz-preview" id="pickPreview" aria-live="polite"></p>
+        <p class="picker-hint" id="pickerHint" aria-live="polite"></p>
+        <button class="btn btn-gold" id="saveTime" type="button">Save our time</button>
+      </div>
+    </section>
+
+    <!-- ===== 4. Next episode ===== -->
+    <section class="scene finale" id="finale" aria-labelledby="dateTitle" hidden>
+      <div class="ticket-stage lit">
+        <article class="ticket ticket--final" id="finalTicket" aria-label="Your ticket, updated">
+          <div class="ticket-main">
+            <div class="ticket-sheen" aria-hidden="true"></div>
+            <div class="ticket-inner">
+              <p class="t-kicker">Private Screening</p>
+              <div class="t-rule" aria-hidden="true"></div>
+              <h2 class="t-title">An Incurable Case of Love</h2>
+              <p class="t-jp" lang="ja">恋はつづくよどこまでも</p>
+
+              <dl class="t-details">
+                <div><dt>Reserved for</dt><dd>PokéBall</dd></div>
+                <div><dt>Seat</dt><dd>Beside me (on the call)</dd></div>
+                <div><dt id="finalDateLabel">Date</dt><dd id="finalDate">—</dd></div>
+                <div><dt id="finalTimeLabel">Time</dt><dd id="finalTime">—</dd></div>
+              </dl>
+
+              <div class="t-status">
+                <span class="t-label">Status</span>
+                <div class="stamp-slot">
+                  <div class="stamp" id="stampOld"><span>To be continued...</span></div>
+                  <div class="stamp stamp--new" id="stampNew"><span>Our next episode</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ticket-stub">
+            <div class="stub-inner">
+              <span class="stub-dress">Admission: One Sunshine</span>
+              <span class="barcode" aria-hidden="true"></span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="date-message">
+        <h2 class="seq" id="dateTitle" tabindex="-1">It's a date, sunshine.</h2>
+        <p class="seq strong">I'll see you when you're ready.</p>
+        <p class="seq"><em>Until then, our story can wait for us.</em></p>
+        <p class="seq sign">— Cariño ♡</p>
+      </div>
+
+      <div class="countdown seq" id="countdown">
+        <p class="cd-label" id="cdLabel">Until our next episode</p>
+        <div class="cd-clock" id="cdClock" role="timer">
+          <div class="cd-unit"><span class="cd-num" id="cdDays">0</span><span class="cd-name">days</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cdHours">00</span><span class="cd-name">hours</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cdMins">00</span><span class="cd-name">minutes</span></div>
+          <div class="cd-unit"><span class="cd-num" id="cdSecs">00</span><span class="cd-name">seconds</span></div>
+        </div>
+        <p class="cd-note" id="cdNote" hidden></p>
+        <a class="btn btn-ghost cal-link" id="calLink" href="#" target="_blank" rel="noopener" hidden>Add to my calendar</a>
+        <button class="btn-text" id="editTimeBtn" type="button" aria-expanded="false" aria-controls="editor">Change our time</button>
+        <div class="editor" id="editor" hidden>
+          <div class="picker-row">
+            <label class="field">
+              <span class="field-label">Date</span>
+              <input type="date" id="editDate">
+            </label>
+            <label class="field">
+              <span class="field-label">Time</span>
+              <input type="time" id="editTime">
+            </label>
+          </div>
+          <div class="tz" role="radiogroup" aria-label="Whose time is this?">
+              <span class="field-label">These times are in</span>
+              <div class="tz-options">
+                <label class="tz-opt"><input type="radio" name="editZone" value="uk"><span>UK time</span></label>
+                <label class="tz-opt"><input type="radio" name="editZone" value="my"><span>Malaysia time</span></label>
+              </div>
+            </div>
+          <p class="tz-preview" id="editPreview" aria-live="polite"></p>
+          <p class="picker-hint" id="editHint" aria-live="polite"></p>
+          <button class="btn btn-gold" id="editSave" type="button">Save our time</button>
+        </div>
+        <p class="sync-note" id="syncNote" aria-live="polite"></p>
+      </div>
+
+      <div class="episodes seq" id="episodes">
+        <p class="ep-label">Where did we stop?</p>
+        <div class="ep-strip" role="group" aria-label="Episodes we've watched together"><button class="ep" type="button" data-ep="1" aria-pressed="false" aria-label="Episode 1">1</button><button class="ep" type="button" data-ep="2" aria-pressed="false" aria-label="Episode 2">2</button><button class="ep" type="button" data-ep="3" aria-pressed="false" aria-label="Episode 3">3</button><button class="ep" type="button" data-ep="4" aria-pressed="false" aria-label="Episode 4">4</button><button class="ep" type="button" data-ep="5" aria-pressed="false" aria-label="Episode 5">5</button><button class="ep" type="button" data-ep="6" aria-pressed="false" aria-label="Episode 6">6</button><button class="ep" type="button" data-ep="7" aria-pressed="false" aria-label="Episode 7">7</button><button class="ep" type="button" data-ep="8" aria-pressed="false" aria-label="Episode 8">8</button><button class="ep" type="button" data-ep="9" aria-pressed="false" aria-label="Episode 9">9</button><button class="ep" type="button" data-ep="10" aria-pressed="false" aria-label="Episode 10">10</button></div>
+        <p class="ep-note" id="epNote" aria-live="polite">Tap the last episode we watched together.</p>
+        <div class="nowclocks" role="group" aria-label="What time it is for each of us right now">
+        <div class="nc"><span class="nc-place">UK</span><span class="nc-time" data-zone="uk">—</span><span class="nc-sky" data-sky="uk" aria-hidden="true"></span></div>
+        <span class="nc-sep" aria-hidden="true">♡</span>
+        <div class="nc"><span class="nc-place">Malaysia</span><span class="nc-time" data-zone="my">—</span><span class="nc-sky" data-sky="my" aria-hidden="true"></span></div>
+      </div>
+      </div>
+
+      <div class="finale-actions seq">
+        <button class="btn btn-gold" id="sendBtn" type="button">Send this to Cariño</button>
+        <button class="btn btn-ghost" id="keepBtn" type="button">Keep my ticket</button>
+        <div class="msg-preview" id="msgPreview" hidden>
+          <p class="msg-preview-note">Copied. Paste this to Cariño:</p>
+          <pre id="msgPreviewText"></pre>
+          <p class="discord-who" id="discordWho" hidden></p>
+          <a class="btn btn-ghost discord-link" id="discordLink" href="https://discord.com/channels/@me" target="_blank" rel="noopener">Open Discord</a>
+        </div>
+        <button class="btn-text" id="replayBtn" type="button">Replay the invitation</button>
+      </div>
+
+      <footer class="end-credits">
+        <div class="filmstrip reveal" aria-hidden="true"></div>
+        <h2 class="last-line reveal">Our story isn't finished yet.</h2>
+        <p class="reveal">Let's continue where we left off, sunshine.</p>
+        <p class="sign reveal">— Cariño</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- ===== Hidden message ===== -->
+  <div class="secret" id="secret" role="dialog" aria-modal="true" aria-labelledby="secretTitle" hidden>
+    <div class="secret-backdrop" data-close></div>
+    <div class="secret-card">
+      <p class="psst" id="secretTitle">Psst...</p>
+      <p>I didn't really need an excuse to ask you to spend some time with me.</p>
+      <p>I just wanted another little memory with you.</p>
+      <button class="btn-text" id="closeSecret" type="button">Close secret</button>
+    </div>
+  </div>
+
+  <noscript>
+    <p class="noscript">This little invitation needs JavaScript switched on to open. ♡</p>
+  </noscript>
+
+  <script>
+/* =========================================================
+   Our Story Isn't Finished Yet — for PokéBall, from Cariño
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   ✎ THINGS YOU CAN CHANGE
+   --------------------------------------------------------- */
+const CONFIG = {
+  // Discord: his message is copied, then he taps "Open Discord" to paste it to you.
+  // discordUserId: your numeric Discord user ID (Settings → Advanced → turn on
+  //   Developer Mode, then right-click/long-press your name → Copy User ID).
+  //   With it, the button opens your profile so he can message you straight away.
+  //   Leave it '' and the button opens his Discord direct messages instead.
+  // discordUsername: shown under the message so he knows who to send it to.
+  discordUserId: '',
+  discordUsername: '',
+
+  // Put an MP3 at this path. If the file isn't there, the ♫ button stays hidden.
+  musicFile: 'assets/audio/our-song.mp3',
+  musicVolume: 0.5,
+
+  // Long distance: where each of you is (IANA time zone names).
+  pokeballTimeZone: 'Europe/London',     // UK
+  carinoTimeZone: 'Asia/Kuala_Lumpur',   // Malaysia
+
+  // Where "Keep my ticket" saves things in his browser.
+  storageKey: 'ourStory.nextEpisode',
+};
+
+(() => {
+  'use strict';
+
+  /* ---------- helpers ---------- */
+  const $ = (s, root = document) => root.querySelector(s);
+  const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+  const body = document.body;
+
+  const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let reduced = motionQuery.matches;
+
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  // cinematic waits shrink when reduced motion is on (order is kept, the drama isn't)
+  const wait = (ms) => sleep(reduced ? Math.min(ms, 150) : ms);
+  const nextFrame = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const pad = (n) => String(n).padStart(2, '0');
+
+  // every long sequence gets an id; starting a new one quietly cancels the old one
+  let run = 0;
+  const alive = (id) => id === run;
+
+  /* ---------- elements ---------- */
+  const opening = $('#opening');
+  const cards = $$('.title-card', opening);
+  const openBtn = $('#openTicket');
+  const keptNote = $('#keptNote');
+
+  const invitation = $('#invitation');
+  const filmTitle = $('#filmTitle');
+  const mainTitle = $('#mainTitle');
+  const ticketStage = $('#ticketStage');
+  const ticket = $('#ticket');
+  const stamp1 = $('#stamp1');
+  const tinyStar = $('#tinyStar');
+  const letter = $('#letter');
+  const toTimeBtn = $('#toTime');
+
+  const timeSec = $('#time');
+  const timeTitle = $('#timeTitle');
+  const chooseBtn = $('#chooseBtn');
+  const picker = $('#picker');
+  const pickerTitle = $('#pickerTitle');
+  const pickDate = $('#pickDate');
+  const pickTime = $('#pickTime');
+  const pickerHint = $('#pickerHint');
+  const saveTimeBtn = $('#saveTime');
+
+  const finale = $('#finale');
+  const finalTicket = $('#finalTicket');
+  const stampOld = $('#stampOld');
+  const stampNew = $('#stampNew');
+  const finalDate = $('#finalDate');
+  const finalTime = $('#finalTime');
+  const dateTitle = $('#dateTitle');
+  const sendBtn = $('#sendBtn');
+  const keepBtn = $('#keepBtn');
+  const replayBtn = $('#replayBtn');
+  const msgPreview = $('#msgPreview');
+  const msgPreviewText = $('#msgPreviewText');
+  const jumpBtn = $('#jumpBtn');
+  const cdLabel = $('#cdLabel');
+  const cdClock = $('#cdClock');
+  const cdNote = $('#cdNote');
+  const cdDays = $('#cdDays');
+  const cdHours = $('#cdHours');
+  const cdMins = $('#cdMins');
+  const cdSecs = $('#cdSecs');
+  const editTimeBtn = $('#editTimeBtn');
+  const editor = $('#editor');
+  const editDate = $('#editDate');
+  const editTime = $('#editTime');
+  const editHint = $('#editHint');
+  const editSave = $('#editSave');
+  const syncNote = $('#syncNote');
+  const finalDateLabel = $('#finalDateLabel');
+  const finalTimeLabel = $('#finalTimeLabel');
+  const pickPreview = $('#pickPreview');
+  const editPreview = $('#editPreview');
+  const playCue = $('#playCue');
+  const playCueNum = $('#playCueNum');
+  const playCueSub = $('#playCueSub');
+  const calLink = $('#calLink');
+  const epButtons = $$('.ep');
+  const epNote = $('#epNote');
+  const EPISODES = 10;
+  const discordLink = $('#discordLink');
+  const discordWho = $('#discordWho');
+
+  const progressItems = $$('.progress li');
+  const curtain = $('#curtain');
+  const whisperEl = $('#whisper');
+  const secret = $('#secret');
+  const closeSecretBtn = $('#closeSecret');
+
+  const state = { sel: null };
+
+  /* =========================================================
+     Atmosphere: stars, dust in the projector light, little sparks
+     ========================================================= */
+  const dust = (() => {
+    const canvas = $('#dust');
+    const ctx = canvas.getContext('2d');
+    let w = 0, h = 0, raf = null, last = 0;
+    let stars = [], motes = [], sparks = [];
+
+    const newMote = (anywhere) => ({
+      x: Math.random() * w,
+      y: anywhere ? Math.random() * h : h + 10,
+      r: Math.random() * 1.3 + 0.35,
+      vx: (Math.random() - 0.5) * 0.08,
+      vy: -(0.05 + Math.random() * 0.13),
+      p: Math.random() * Math.PI * 2,
+      a: 0.12 + Math.random() * 0.3,
+    });
+
+    function seed() {
+      const area = w * h;
+      stars = Array.from({ length: Math.round(Math.min(80, area / 9000)) }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h * 0.55,
+        r: Math.random() * 0.9 + 0.25,
+        p: Math.random() * Math.PI * 2,
+        s: 0.3 + Math.random() * 0.8,
+      }));
+      motes = Array.from({ length: Math.round(Math.min(55, area / 15000)) }, () => newMote(true));
+    }
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = canvas.clientWidth;
+      h = canvas.clientHeight;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      seed();
+      if (reduced) draw(0, 0);
+    }
+
+    function draw(t, dt) {
+      ctx.clearRect(0, 0, w, h);
+
+      ctx.fillStyle = '#EEE6D8';
+      for (const s of stars) {
+        ctx.globalAlpha = reduced ? 0.5 : 0.28 + 0.32 * (1 + Math.sin(t * 0.001 * s.s + s.p)) / 2 * 1.6;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, 6.283);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = '#C9AA70';
+      const cx = w / 2;
+      for (const m of motes) {
+        if (!reduced) {
+          m.x += m.vx * dt + Math.sin(t * 0.0005 + m.p) * 0.07 * dt;
+          m.y += m.vy * dt;
+          if (m.y < -10) Object.assign(m, newMote(false));
+        }
+        // brighter when floating through the projector light
+        const inBeam = Math.abs(m.x - cx) < m.y * 0.28 + 12;
+        ctx.globalAlpha = m.a * (inBeam ? 1.7 : 0.55);
+        ctx.beginPath();
+        ctx.arc(m.x, m.y, m.r, 0, 6.283);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = '#f2dcaa';
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i];
+        s.life -= 0.0055 * dt;
+        if (s.life <= 0) { sparks.splice(i, 1); continue; }
+        s.x += s.vx * dt;
+        s.y += s.vy * dt;
+        s.vx *= 0.995;
+        s.vy -= 0.0018 * dt;
+        ctx.globalAlpha = Math.min(1, s.life * 1.2) * 0.85;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, 6.283);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function frame(t) {
+      const dt = last ? Math.min(3, (t - last) / 16.67) : 1;
+      last = t;
+      draw(t, dt);
+      raf = requestAnimationFrame(frame);
+    }
+
+    function start() {
+      if (raf || reduced) return;
+      last = 0;
+      raf = requestAnimationFrame(frame);
+    }
+    function stop() {
+      if (raf) cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    function burstAround(el, n = 24) {
+      if (reduced || !el) return;
+      const r = el.getBoundingClientRect();
+      for (let i = 0; i < n; i++) {
+        const edge = Math.random();
+        // spawn along the ticket's edges so they drift away from it
+        const x = edge < 0.5 ? r.left + Math.random() * r.width : (Math.random() < 0.5 ? r.left : r.right);
+        const y = edge < 0.5 ? (Math.random() < 0.5 ? r.top : r.bottom) : r.top + Math.random() * r.height;
+        const ang = Math.atan2(y - (r.top + r.height / 2), x - (r.left + r.width / 2));
+        const sp = 0.12 + Math.random() * 0.35;
+        sparks.push({
+          x, y,
+          vx: Math.cos(ang) * sp,
+          vy: Math.sin(ang) * sp - 0.1,
+          r: Math.random() * 1.4 + 0.5,
+          life: 0.7 + Math.random() * 0.5,
+        });
+      }
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(resize, 150);
+    });
+    document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+    resize();
+    start();
+
+    return {
+      burstAround,
+      setReduced() { stop(); resize(); start(); },
+    };
+  })();
+
+  /* a quiet night city along the bottom of the screen (same scale on phone and laptop) */
+  const buildSkyline = (() => {
+    const svg = $('#skyline');
+    let builtFor = 0;
+    function build() {
+      const vw = window.innerWidth;
+      if (Math.abs(vw - builtFor) < 60) return;
+      builtFor = vw;
+      const pxH = Math.max(110, Math.min(window.innerHeight * 0.24, 240));
+      const W = Math.ceil((vw * 120) / pxH);
+      svg.setAttribute('viewBox', `0 0 ${W} 120`);
+      let x = -4;
+      let markup = '';
+      while (x < W + 4) {
+        const bw = 12 + Math.random() * 26;
+        const bh = 22 + Math.random() * (Math.random() < 0.2 ? 80 : 50);
+        const top = 120 - bh;
+        markup += `<rect class="bld" x="${x.toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}"/>`;
+        for (let wy = top + 5; wy < 116; wy += 6) {
+          for (let wx = x + 3; wx < x + bw - 3; wx += 5) {
+            if (Math.random() < 0.13) {
+              const tw = Math.random() < 0.25;
+              const delay = (Math.random() * 9).toFixed(1);
+              markup += `<rect class="win${tw ? ' tw' : ''}" x="${wx.toFixed(1)}" y="${wy.toFixed(1)}" width="1.8" height="2.4"${tw ? ` style="animation-delay:-${delay}s"` : ''}/>`;
+            }
+          }
+        }
+        x += bw + (Math.random() < 0.3 ? 2 : 0);
+      }
+      svg.innerHTML = markup;
+    }
+    build();
+    let t;
+    window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(build, 200); });
+    return build;
+  })();
+
+  motionQuery.addEventListener?.('change', (e) => {
+    reduced = e.matches;
+    dust.setReduced();
+  });
+
+  /* =========================================================
+     Reveal-on-scroll (letter lines, choices, end credits)
+     ========================================================= */
+  const revealIO = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+        let i = 0;
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.style.setProperty('--d', `${(i++ * 0.16).toFixed(2)}s`);
+          e.target.classList.add('in');
+          revealIO.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -6% 0px' })
+    : null;
+
+  function observeReveals(nodes) {
+    nodes.forEach((n) => (revealIO ? revealIO.observe(n) : n.classList.add('in')));
+  }
+
+  /* progress follows what he's looking at */
+  function setStage(n) {
+    body.dataset.stage = String(n);
+    progressItems.forEach((li, i) => {
+      const step = i + 1;
+      li.classList.toggle('is-current', step === n);
+      li.classList.toggle('is-done', step < n);
+      if (step === n) li.setAttribute('aria-current', 'step');
+      else li.removeAttribute('aria-current');
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    const stageIO = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const mark = Number(e.target.dataset.stageMark);
+        const now = Number(body.dataset.stage);
+        if (now >= 1 && now < 4 && mark > now) setStage(mark);
+      });
+    }, { threshold: 0.3 });
+    [letter, timeSec].forEach((el) => stageIO.observe(el));
+  }
+
+  /* =========================================================
+     Small whispered messages
+     ========================================================= */
+  let whisperRun = 0;
+  async function whisper(lines, each = 2800) {
+    const id = ++whisperRun;
+    whisperEl.classList.remove('is-on');
+    await sleep(120);
+    for (const line of lines) {
+      if (id !== whisperRun) return;
+      whisperEl.textContent = line;
+      whisperEl.classList.add('is-on');
+      await sleep(each);
+      if (id !== whisperRun) return;
+      whisperEl.classList.remove('is-on');
+      await sleep(750);
+    }
+    if (id === whisperRun) whisperEl.textContent = '';
+  }
+
+  /* =========================================================
+     0. Opening
+     ========================================================= */
+  let openingDone = false;
+
+  function showCard(n) {
+    const c = cards[n - 1];
+    c.classList.remove('is-out');
+    c.classList.add('is-in');
+  }
+  function hideCard(n) {
+    const c = cards[n - 1];
+    c.classList.remove('is-in');
+    c.classList.add('is-out');
+  }
+
+  async function playOpening() {
+    const id = ++run;
+    openingDone = false;
+    await wait(700); if (!alive(id)) return;
+    body.classList.add('lights');
+    await wait(1700); if (!alive(id)) return;
+    showCard(1);
+    await wait(3100); if (!alive(id)) return;
+    hideCard(1);
+    await wait(1400); if (!alive(id)) return;
+    showCard(2);
+    await wait(3200); if (!alive(id)) return;
+    hideCard(2);
+    await wait(1400); if (!alive(id)) return;
+    showCard(3);
+    openingDone = true;
+  }
+
+  // a tap anywhere (or tabbing to the button) skips straight to "PokéBall..."
+  function skipOpening() {
+    if (openingDone) return;
+    ++run;
+    openingDone = true;
+    body.classList.add('lights');
+    opening.classList.add('quick');
+    hideCard(1);
+    hideCard(2);
+    showCard(3);
+  }
+  opening.addEventListener('click', (e) => {
+    if (e.target.closest('#openTicket, #jumpBtn')) return;
+    skipOpening();
+  });
+  openBtn.addEventListener('focus', skipOpening);
+
+  /* =========================================================
+     1. The ticket unfolds
+     ========================================================= */
+  let ticketOpened = false;
+
+  async function openTicket() {
+    if (ticketOpened) return;
+    ticketOpened = true;
+    openBtn.disabled = true;
+    const id = ++run;
+
+    opening.classList.add('is-leaving');
+    await wait(1300); if (!alive(id)) return;
+
+    opening.hidden = true;
+    invitation.hidden = false;
+    window.scrollTo(0, 0);
+    body.classList.add('show-progress');
+    setStage(1);
+    mainTitle.focus({ preventScroll: true });
+
+    await nextFrame();
+    filmTitle.classList.add('in');
+
+    await wait(1000); if (!alive(id)) return;
+    ticket.classList.add('unfold');
+    ticketStage.classList.add('lit');
+
+    await wait(1500); if (!alive(id)) return;
+    dust.burstAround(ticket, 26);
+
+    await wait(900); if (!alive(id)) return;
+    ticket.classList.add('sheen', 'settle');
+
+    await wait(1000); if (!alive(id)) return;
+    stamp1.classList.add('is-in');
+
+    await wait(900); if (!alive(id)) return;
+    tinyStar.classList.add('in');
+    observeReveals($$('.reveal', invitation));
+  }
+  openBtn.addEventListener('click', openTicket);
+
+  /* =========================================================
+     2 → 3. Choosing our time
+     ========================================================= */
+  toTimeBtn.addEventListener('click', () => {
+    timeSec.hidden = false;
+    observeReveals($$('.reveal', timeSec));
+    setStage(3);
+    requestAnimationFrame(() => {
+      timeSec.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+      timeTitle.focus({ preventScroll: true });
+    });
+  });
+
+  /* ---------- two countries, one moment ---------- */
+  const ZONES = {
+    uk: { name: 'the UK', short: 'UK', iana: CONFIG.pokeballTimeZone },
+    my: { name: 'Malaysia', short: 'Malaysia', iana: CONFIG.carinoTimeZone },
+  };
+  const zoneKey = (k) => (ZONES[k] ? k : 'uk');
+  const otherZone = (k) => (zoneKey(k) === 'uk' ? 'my' : 'uk');
+
+  function deviceZoneKey() {
+    try {
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (tz === ZONES.my.iana) return 'my';
+      if (tz === ZONES.uk.iana) return 'uk';
+    } catch (e) { /* ignore */ }
+    return -new Date().getTimezoneOffset() === 480 ? 'my' : 'uk';
+  }
+
+  const dtfCache = {};
+  function partsAt(utcMs, iana) {
+    const f = dtfCache[iana] || (dtfCache[iana] = new Intl.DateTimeFormat('en-US', {
+      timeZone: iana, hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+    }));
+    const p = {};
+    f.formatToParts(new Date(utcMs)).forEach((x) => { p[x.type] = x.value; });
+    return p;
+  }
+  function zoneOffset(iana, utcMs) {
+    const p = partsAt(utcMs, iana);
+    const asUTC = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute, +p.second);
+    return asUTC - (utcMs - (((utcMs % 1000) + 1000) % 1000));
+  }
+  // "2026-10-10" + "21:00" in a given zone → one exact moment
+  function zonedToUtc(date, time, iana) {
+    const [y, m, d] = date.split('-').map(Number);
+    const [h, mi] = time.split(':').map(Number);
+    const guess = Date.UTC(y, m - 1, d, h, mi);
+    const first = guess - zoneOffset(iana, guess);
+    return guess - zoneOffset(iana, first);
+  }
+  function inputsAt(utcMs, iana) {
+    const p = partsAt(utcMs, iana);
+    return { date: `${p.year}-${p.month}-${p.day}`, time: `${pad(+p.hour % 24)}:${p.minute}` };
+  }
+  const fmtDay = (at, iana) => new Date(at).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', timeZone: iana });
+  const fmtClock = (at, iana) => new Date(at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: iana });
+  const hourAt = (at, iana) => +partsAt(at, iana).hour % 24;
+
+  function zoneOf(name) {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    return checked ? checked.value : deviceZoneKey();
+  }
+  function setZone(name, key) {
+    $$(`input[name="${name}"]`).forEach((r) => { r.checked = r.value === key; });
+  }
+
+  // shows what a picked time means on the other side of the world
+  function previewText(date, time, key) {
+    if (!date || !time) return '';
+    const at = zonedToUtc(date, time, ZONES[key].iana);
+    const other = otherZone(key);
+    const iana = ZONES[other].iana;
+    const h = hourAt(at, iana);
+    const late = h < 6 ? " That's very early there." : h >= 23 ? " That's very late there." : '';
+    return `That's ${fmtDay(at, iana)}, ${fmtClock(at, iana)} in ${ZONES[other].name}.${late}`;
+  }
+  function bindPreview(dateEl, timeEl, zoneName, out) {
+    const update = () => { out.textContent = previewText(dateEl.value, timeEl.value, zoneOf(zoneName)); };
+    [dateEl, timeEl].forEach((el) => { el.addEventListener('input', update); el.addEventListener('change', update); });
+    $$(`input[name="${zoneName}"]`).forEach((r) => r.addEventListener('change', update));
+    return update;
+  }
+
+  const todayStr = () => {
+    const d = new Date();
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  };
+
+  function openPicker() {
+    picker.hidden = false;
+    chooseBtn.setAttribute('aria-expanded', 'true');
+    if (!document.querySelector('input[name="pickZone"]:checked')) setZone('pickZone', deviceZoneKey());
+    pickerHint.textContent = '';
+    updatePickPreview();
+    requestAnimationFrame(() => {
+      picker.classList.add('in');
+      picker.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+      pickerTitle.focus({ preventScroll: true });
+    });
+  }
+
+  $$('[data-choice]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const kind = btn.dataset.choice;
+      if (kind === 'choose') openPicker();
+      else if (kind === 'tonight') finalize({ kind, date: todayStr(), time: '', tz: deviceZoneKey() });
+      else finalize({ kind, date: '', time: '', tz: deviceZoneKey() });
+    });
+  });
+
+  const updatePickPreview = bindPreview(pickDate, pickTime, 'pickZone', pickPreview);
+
+  saveTimeBtn.addEventListener('click', () => {
+    const date = pickDate.value;
+    const tz = zoneOf('pickZone');
+    if (!date) {
+      pickerHint.textContent = 'Pick a day first, sunshine.';
+      pickDate.focus();
+      return;
+    }
+    const sel = { kind: 'custom', date, time: pickTime.value, tz };
+    const at = targetMs(sel);
+    const passed = at != null ? at <= Date.now() : date < inputsAt(Date.now(), ZONES[tz].iana).date;
+    if (passed) {
+      pickerHint.textContent = "That's already behind us. Pick a time ahead.";
+      pickDate.focus();
+      return;
+    }
+    finalize(sel);
+  });
+
+  function formatDate(str) {
+    const [y, m, d] = str.split('-').map(Number);
+    const date = new Date(y, m - 1, d);
+    return date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+  function formatTime(str) {
+    const [h, m] = str.split(':').map(Number);
+    const suffix = h < 12 ? 'AM' : 'PM';
+    const h12 = h % 12 === 0 ? 12 : h % 12;
+    return `${h12}:${pad(m)} ${suffix}`;
+  }
+
+  function describe(sel) {
+    if (!sel) return { exact: false, date: '', time: '' };
+    const at = targetMs(sel);
+    if (at != null) {
+      return {
+        exact: true,
+        at,
+        uk: `${fmtDay(at, ZONES.uk.iana)}, ${fmtClock(at, ZONES.uk.iana)}`,
+        my: `${fmtDay(at, ZONES.my.iana)}, ${fmtClock(at, ZONES.my.iana)}`,
+      };
+    }
+    const where = ZONES[zoneKey(sel.tz)].short;
+    if (sel.kind === 'another' && !sel.date) return { exact: false, date: 'Another day', time: "Whenever you're ready" };
+    if (sel.kind === 'tonight') return { exact: false, date: `Tonight (${where} time)`, time: "Whenever you're free tonight" };
+    return {
+      exact: false,
+      date: sel.date ? `${formatDate(sel.date)} (${where})` : 'Another day',
+      time: "Whenever you're ready",
+    };
+  }
+
+  // the exact moment, if we have one
+  function targetMs(sel) {
+    if (!sel || !sel.date || !sel.time) return null;
+    try {
+      const t = zonedToUtc(sel.date, sel.time, ZONES[zoneKey(sel.tz)].iana);
+      return Number.isFinite(t) ? t : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function humanLeft(ms) {
+    const mins = Math.max(1, Math.floor(ms / 60000));
+    const d = Math.floor(mins / 1440), h = Math.floor((mins % 1440) / 60), m = mins % 60;
+    const pl = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+    if (d > 0) return h ? `${pl(d, 'day')} and ${pl(h, 'hour')}` : pl(d, 'day');
+    if (h > 0) return m ? `${pl(h, 'hour')} and ${pl(m, 'minute')}` : pl(h, 'hour');
+    return pl(m, 'minute');
+  }
+
+  /* =========================================================
+     Saving our time: on this phone, and (when the page allows it)
+     shared, so we both see the same date and countdown
+     ========================================================= */
+  function saveLocal(sel) {
+    try {
+      localStorage.setItem(CONFIG.storageKey, JSON.stringify({
+        kind: sel.kind, date: sel.date || '', time: sel.time || '', tz: zoneKey(sel.tz),
+        updatedAt: sel.updatedAt || Date.now(),
+      }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  const shared = { ref: null, canWrite: false };
+
+  async function connectShared() {
+    if (!window.claude || typeof window.claude.use !== 'function') return;
+    let db = null;
+    try { db = await window.claude.use('db'); } catch (e) { db = null; }
+    if (!db) return;
+    try {
+      const user = await window.claude.use('user');
+      const can = user ? await user.can('data.write') : null;
+      shared.canWrite = can !== false;
+    } catch (e) {
+      shared.canWrite = true;
+    }
+    try {
+      progress.ref = db.doc('progress/episodes');
+      progress.ref.onSnapshot((snap) => {
+        if (!snap.exists) return;
+        const d = snap.data() || {};
+        const w = Number(d.watched);
+        const at = Number(d.updatedAt) || 0;
+        if (Number.isInteger(w) && w >= 0 && w <= EPISODES && at > progress.updatedAt) setEpisodes(w, true, at);
+      }, () => {});
+      shared.ref = db.doc('plan/next');
+      shared.ref.onSnapshot((snap) => {
+        if (!snap.exists) return;
+        const d = snap.data() || {};
+        applyRemote({
+          kind: String(d.kind || ''),
+          date: String(d.date || ''),
+          time: String(d.time || ''),
+          tz: zoneKey(String(d.tz || '')),
+          updatedAt: Number(d.updatedAt) || 0,
+        });
+      }, () => {});
+    } catch (e) {
+      shared.ref = null;
+    }
+  }
+
+  function applyRemote(sel) {
+    if (!['tonight', 'another', 'custom'].includes(sel.kind)) return;
+    if (sel.date && !/^\d{4}-\d{2}-\d{2}$/.test(sel.date)) return;
+    if (sel.time && !/^\d{2}:\d{2}$/.test(sel.time)) return;
+    const local = readKept();
+    if (local) {
+      const same = local.kind === sel.kind && local.date === sel.date && local.time === sel.time && zoneKey(local.tz) === sel.tz;
+      if (same || (local.updatedAt || 0) > sel.updatedAt) return;
+    }
+    saveLocal(sel);
+    if (!finale.hidden) {
+      state.sel = sel;
+      renderPlan();
+    }
+    updateKeptNote();
+  }
+
+  async function writeShared(sel, retried = false) {
+    if (!shared.ref || !shared.canWrite) return;
+    try {
+      await shared.ref.set({ kind: sel.kind, date: sel.date || '', time: sel.time || '', tz: zoneKey(sel.tz), updatedAt: sel.updatedAt });
+      syncNote.textContent = 'Saved for both of us ♡';
+    } catch (e) {
+      if (e && e.code === 'unavailable' && !retried) {
+        setTimeout(() => writeShared(sel, true), 1200 + Math.random() * 1200);
+      } else {
+        shared.canWrite = false;
+      }
+    }
+  }
+
+  function commitPlan(sel) {
+    const clean = { kind: sel.kind, date: sel.date || '', time: sel.time || '', tz: zoneKey(sel.tz), updatedAt: Date.now() };
+    state.sel = clean;
+    saveLocal(clean);
+    writeShared(clean);
+  }
+
+  /* =========================================================
+     The countdown
+     ========================================================= */
+  let cdTimer = null;
+
+  function renderPlan() {
+    const d = describe(state.sel);
+    if (d.exact) {
+      finalDateLabel.textContent = 'In the UK';
+      finalDate.textContent = d.uk;
+      finalTimeLabel.textContent = 'In Malaysia';
+      finalTime.textContent = d.my;
+    } else {
+      finalDateLabel.textContent = 'Date';
+      finalDate.textContent = d.date;
+      finalTimeLabel.textContent = 'Time';
+      finalTime.textContent = d.time;
+    }
+    tickCountdown();
+  }
+  function startCountdown() {
+    stopCountdown();
+    tickCountdown();
+    cdTimer = setInterval(tickCountdown, 250);
+  }
+  function stopCountdown() {
+    clearInterval(cdTimer);
+    cdTimer = null;
+    hideCue();
+  }
+
+  /* 5… 4… 3… 2… 1… press play, on both screens at the same moment */
+  let cueFor = null;        // which moment the cue is showing for
+  let cueDoneFor = null;    // closed or finished
+  let lastCueText = '';
+
+  function hideCue() {
+    playCue.hidden = true;
+    lastCueText = '';
+  }
+  function runCue(t, diff) {
+    if (finale.hidden || cueDoneFor === t) return;
+    if (diff > 5000 || diff < -12000) {
+      if (cueFor === t && diff < -12000) { cueDoneFor = t; hideCue(); }
+      return;
+    }
+    cueFor = t;
+    const text = diff > 0 ? String(Math.ceil(diff / 1000)) : '♡';
+    if (playCue.hidden) {
+      playCue.hidden = false;
+      $('#playCueClose').focus({ preventScroll: true });
+    }
+    if (text !== lastCueText) {
+      lastCueText = text;
+      playCueNum.textContent = text;
+      playCueSub.textContent = diff > 0 ? 'Get ready to press play' : 'Press play, sunshine.';
+      playCueNum.classList.remove('tick');
+      void playCueNum.offsetWidth;
+      playCueNum.classList.add('tick');
+      if (diff <= 0) dust.burstAround(playCueNum, 30);
+    }
+  }
+  $('#playCueClose').addEventListener('click', () => {
+    cueDoneFor = cueFor;
+    hideCue();
+    dateTitle.focus({ preventScroll: true });
+  });
+  const setText = (el, v) => { if (el.textContent !== v) el.textContent = v; };
+
+  function tickCountdown() {
+    const t = targetMs(state.sel);
+    const editing = !editor.hidden;
+    const note = (text, btnText) => {
+      calLink.hidden = true;
+      cdClock.hidden = true;
+      cdLabel.hidden = true;
+      cdNote.hidden = false;
+      setText(cdNote, text);
+      if (!editing) setText(editTimeBtn, btnText);
+    };
+
+    if (t == null) return note('No exact time yet.', 'Set the exact time');
+
+    const diff = t - Date.now();
+    runCue(t, diff);
+    if (diff <= 0) {
+      if (diff > -6 * 3600e3) return note("It's time, sunshine. Press play ♡", 'Change our time');
+      return note('That episode has come and gone. Shall we pick the next one?', 'Pick our next time');
+    }
+
+    cdClock.hidden = false;
+    cdLabel.hidden = false;
+    cdNote.hidden = true;
+    setCalendar(t);
+    if (!editing) setText(editTimeBtn, 'Change our time');
+
+    const total = Math.floor(diff / 1000);
+    const days = Math.floor(total / 86400);
+    const hours = Math.floor((total % 86400) / 3600);
+    const mins = Math.floor((total % 3600) / 60);
+    const secs = total % 60;
+    setText(cdDays, String(days));
+    setText(cdHours, pad(hours));
+    setText(cdMins, pad(mins));
+    setText(cdSecs, pad(secs));
+    cdClock.setAttribute('aria-label', `${days} days, ${hours} hours and ${mins} minutes until our next episode`);
+  }
+
+  let calFor = null;
+  function setCalendar(t) {
+    calLink.hidden = false;
+    if (calFor === t) return;
+    calFor = t;
+    const stamp = (ms) => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: 'Our next episode ♡ An Incurable Case of Love',
+      dates: `${stamp(t)}/${stamp(t + 60 * 60 * 1000)}`,
+      details: 'Private screening for PokéBall & Cariño.\nSeat: beside me (on the call).',
+    });
+    calLink.href = `https://calendar.google.com/calendar/render?${params.toString().replace('%2F', '/')}`;
+  }
+
+  /* ---------- both clocks, right now ---------- */
+  function updateNowClocks() {
+    const now = Date.now();
+    Object.keys(ZONES).forEach((k) => {
+      const iana = ZONES[k].iana;
+      const h = hourAt(now, iana);
+      $$(`[data-zone="${k}"]`).forEach((el) => setText(el, fmtClock(now, iana)));
+      $$(`[data-sky="${k}"]`).forEach((el) => setText(el, h >= 6 && h < 18 ? '☀' : '☾'));
+    });
+  }
+  updateNowClocks();
+  setInterval(updateNowClocks, 15000);
+
+  /* ---------- where we stopped ---------- */
+  const EP_KEY = `${CONFIG.storageKey}.episodes`;
+  const progress = { watched: 0, updatedAt: 0, ref: null };
+
+  function readEpisodes() {
+    try {
+      const v = JSON.parse(localStorage.getItem(EP_KEY) || 'null');
+      if (v && Number.isInteger(v.watched)) { progress.watched = v.watched; progress.updatedAt = v.updatedAt || 0; }
+    } catch (e) { /* ignore */ }
+  }
+  function renderEpisodes() {
+    const n = progress.watched;
+    epButtons.forEach((b) => {
+      const i = Number(b.dataset.ep);
+      b.setAttribute('aria-pressed', String(i <= n));
+      b.classList.toggle('is-next', i === n + 1);
+    });
+    if (n <= 0) epNote.textContent = 'Tap the last episode we watched together.';
+    else if (n >= EPISODES) epNote.textContent = 'We finished it together ♡';
+    else epNote.textContent = `We've watched ${n} of ${EPISODES}. Next up: episode ${n + 1}.`;
+  }
+  function setEpisodes(n, fromRemote = false, at = Date.now()) {
+    progress.watched = Math.max(0, Math.min(EPISODES, n));
+    progress.updatedAt = at;
+    try { localStorage.setItem(EP_KEY, JSON.stringify({ watched: progress.watched, updatedAt: at })); } catch (e) { /* ignore */ }
+    renderEpisodes();
+    if (!fromRemote && progress.ref && shared.canWrite) {
+      progress.ref.set({ watched: progress.watched, updatedAt: at }).catch(() => {});
+    }
+  }
+  epButtons.forEach((b) => b.addEventListener('click', () => {
+    const i = Number(b.dataset.ep);
+    // tapping the last watched episode again un-ticks it
+    setEpisodes(i === progress.watched ? i - 1 : i);
+  }));
+  readEpisodes();
+  renderEpisodes();
+
+  function openEditor() {
+    editor.hidden = false;
+    editTimeBtn.setAttribute('aria-expanded', 'true');
+    editTimeBtn.textContent = 'Never mind';
+    const key = deviceZoneKey();
+    setZone('editZone', key);
+    const iana = ZONES[key].iana;
+    const at = targetMs(state.sel);
+    if (at != null && at > Date.now()) {
+      const v = inputsAt(at, iana);
+      editDate.value = v.date;
+      editTime.value = v.time;
+    } else {
+      editDate.value = inputsAt(Date.now(), iana).date;
+      editTime.value = '';
+    }
+    editHint.textContent = '';
+    updateEditPreview();
+    requestAnimationFrame(() => editor.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' }));
+  }
+  function closeEditor() {
+    editor.hidden = true;
+    editTimeBtn.setAttribute('aria-expanded', 'false');
+    tickCountdown();
+  }
+  const updateEditPreview = bindPreview(editDate, editTime, 'editZone', editPreview);
+  editTimeBtn.addEventListener('click', () => (editor.hidden ? openEditor() : closeEditor()));
+
+  editSave.addEventListener('click', () => {
+    if (!editDate.value) { editHint.textContent = 'Pick a day first, sunshine.'; editDate.focus(); return; }
+    if (!editTime.value) { editHint.textContent = 'Pick a time too, so I can count down.'; editTime.focus(); return; }
+    const sel = { kind: 'custom', date: editDate.value, time: editTime.value, tz: zoneOf('editZone') };
+    if (targetMs(sel) <= Date.now()) { editHint.textContent = "That time's already passed. Pick one ahead."; return; }
+    commitPlan(sel);
+    renderPlan();
+    closeEditor();
+    keepBtn.textContent = 'Keep my ticket';
+    msgPreview.hidden = true;
+    finalTicket.classList.remove('sheen');
+    void finalTicket.offsetWidth;
+    finalTicket.classList.add('sheen');
+    dust.burstAround(finalTicket, 20);
+    whisper(['Saved our time ♡'], 2600);
+  });
+
+  /* =========================================================
+     4. "Our next episode"
+     ========================================================= */
+  const curtainDown = () => { curtain.classList.add('is-down'); return sleep(reduced ? 250 : 950); };
+  const curtainUp = () => curtain.classList.remove('is-down');
+
+  let finalizing = false;
+
+  async function finalize(sel, { fresh = true } = {}) {
+    if (finalizing) return;
+    finalizing = true;
+    if (fresh) commitPlan(sel);
+    else state.sel = sel;
+    const id = ++run;
+
+    await curtainDown();
+    if (!alive(id)) return;
+
+    opening.hidden = true;
+    invitation.hidden = true;
+    timeSec.hidden = true;
+    finale.hidden = false;
+    body.classList.add('lights', 'show-progress');
+    editor.hidden = true;
+    editTimeBtn.setAttribute('aria-expanded', 'false');
+    if (!shared.ref) syncNote.textContent = '';
+    renderPlan();
+    startCountdown();
+    keepBtn.textContent = 'Keep my ticket';
+    msgPreview.hidden = true;
+    window.scrollTo(0, 0);
+    setStage(4);
+
+    await wait(300);
+    curtainUp();
+    dateTitle.focus({ preventScroll: true });
+
+    await wait(700); if (!alive(id)) return;
+    finalTicket.classList.add('unfold');
+
+    await wait(1800); if (!alive(id)) return;
+    stampOld.classList.add('is-in');
+
+    await wait(1900); if (!alive(id)) return;
+    finalTicket.classList.add('sheen');
+    stampOld.classList.add('is-out');
+
+    await wait(600); if (!alive(id)) return;
+    stampNew.classList.add('is-in');
+    finalTicket.classList.add('settle');
+    dust.burstAround(finalTicket, 34);
+
+    await wait(1400);
+    for (const el of $$('.seq', finale)) {
+      if (!alive(id)) return;
+      el.classList.add('in');
+      await wait(900);
+    }
+    observeReveals($$('.end-credits .reveal', finale));
+    finalizing = false;
+  }
+
+  /* send / keep / replay */
+  function buildMessage() {
+    const d = describe(state.sel);
+    return [
+      'Cariño, I picked our next episode:',
+      '',
+      ...(d.exact
+        ? [`UK: ${d.uk}`, `Malaysia: ${d.my}`]
+        : [`Date: ${d.date}`, `Time: ${d.time}`]),
+      ...(progress.watched > 0 && progress.watched < EPISODES ? [`Next up: episode ${progress.watched + 1}`] : []),
+      '',
+      "I'm ready to continue our drama date with you. ♡",
+      '',
+      '— PokéBall',
+    ].join('\n');
+  }
+
+  async function copyText(text) {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+    } catch (e) { /* fall through */ }
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;font-size:16px;';
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand('copy');
+      ta.remove();
+      return ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  sendBtn.addEventListener('click', async () => {
+    if (!state.sel) return;
+    const msg = buildMessage();
+    const ok = await copyText(msg);
+
+    const id = String(CONFIG.discordUserId || '').replace(/\D/g, '');
+    discordLink.href = id ? `https://discord.com/users/${id}` : 'https://discord.com/channels/@me';
+    const name = String(CONFIG.discordUsername || '').trim().replace(/^@/, '');
+    discordWho.textContent = name ? `On Discord, I'm @${name}.` : '';
+    discordWho.hidden = !name;
+
+    msgPreviewText.textContent = msg;
+    msgPreview.querySelector('.msg-preview-note').textContent = ok
+      ? 'Copied. Paste this to Cariño on Discord:'
+      : 'Send this to Cariño on Discord:';
+    msgPreview.hidden = false;
+    whisper([ok ? 'Copied. Now send it to Cariño ♡' : 'Here it is. Send it to Cariño ♡'], 3000);
+    requestAnimationFrame(() => msgPreview.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' }));
+  });
+
+  function readKept() {
+    try {
+      const raw = localStorage.getItem(CONFIG.storageKey);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function updateKeptNote() {
+    const kept = readKept();
+    if (!kept || !kept.kind) {
+      keptNote.hidden = true;
+      jumpBtn.hidden = true;
+      return;
+    }
+    const t = targetMs(kept);
+    if (t && t > Date.now()) {
+      keptNote.textContent = `Our next episode is in ${humanLeft(t - Date.now())}.`;
+      jumpBtn.textContent = 'See our countdown';
+    } else {
+      const d = describe(kept);
+      if (d.exact) {
+        keptNote.textContent = `You kept a ticket for ${d.uk} (UK time).`;
+      } else {
+        const when = d.time.charAt(0).toLowerCase() + d.time.slice(1);
+        keptNote.textContent = `You kept a ticket for ${d.date}, ${when}.`;
+      }
+      jumpBtn.textContent = 'See our ticket';
+    }
+    keptNote.hidden = false;
+    jumpBtn.hidden = false;
+  }
+
+  jumpBtn.addEventListener('click', () => {
+    const kept = readKept();
+    if (kept && kept.kind) finalize(kept, { fresh: false });
+  });
+
+  keepBtn.addEventListener('click', () => {
+    if (!state.sel) return;
+    if (saveLocal(state.sel)) {
+      keepBtn.textContent = 'Ticket kept ♡';
+      whisper(["Kept safe. It'll be here when you come back."], 3200);
+    } else {
+      whisper(["This browser won't keep it. A screenshot works too ♡"], 3600);
+    }
+  });
+
+  async function replay() {
+    const id = ++run;
+    finalizing = false;
+    ticketOpened = false;
+    await curtainDown();
+    if (!alive(id)) return;
+    resetAll();
+    await sleep(350);
+    curtainUp();
+    playOpening();
+  }
+  replayBtn.addEventListener('click', replay);
+
+  function resetAll() {
+    [invitation, timeSec, finale].forEach((s) => (s.hidden = true));
+    picker.hidden = true;
+    picker.classList.remove('in');
+    chooseBtn.setAttribute('aria-expanded', 'false');
+    pickerHint.textContent = '';
+
+    opening.hidden = false;
+    opening.classList.remove('is-leaving', 'quick');
+    cards.forEach((c) => c.classList.remove('is-in', 'is-out'));
+    openBtn.disabled = false;
+
+    $$('.reveal.in, .seq.in').forEach((el) => {
+      el.classList.remove('in');
+      el.style.removeProperty('--d');
+    });
+    // restore the opening's own stagger
+    $$('.title-card .reveal').forEach((el, i) => el.style.setProperty('--d', ['0s', '1.2s', '2.6s', '3.4s', '3.6s'][i] || '0s'));
+    stopCountdown();
+    editor.hidden = true;
+
+    [ticket, finalTicket].forEach((t) => t.classList.remove('unfold', 'sheen', 'settle'));
+    [stamp1, stampOld, stampNew].forEach((s) => s.classList.remove('is-in', 'is-out'));
+    ticketStage.classList.remove('lit');
+    filmTitle.classList.remove('in');
+    tinyStar.classList.remove('in');
+    msgPreview.hidden = true;
+
+    body.classList.remove('lights', 'show-progress');
+    setStage(0);
+    updateKeptNote();
+    window.scrollTo(0, 0);
+  }
+
+  /* =========================================================
+     The hidden message (gold seal)
+     ========================================================= */
+  let lastFocus = null;
+
+  function openSecret() {
+    lastFocus = document.activeElement;
+    secret.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => secret.classList.add('is-open')));
+    closeSecretBtn.focus({ preventScroll: true });
+  }
+  async function closeSecret() {
+    secret.classList.remove('is-open');
+    await sleep(reduced ? 50 : 650);
+    secret.hidden = true;
+    if (lastFocus) lastFocus.focus({ preventScroll: true });
+  }
+
+  $('#seal').addEventListener('click', openSecret);
+  closeSecretBtn.addEventListener('click', closeSecret);
+  $('[data-close]', secret).addEventListener('click', closeSecret);
+  document.addEventListener('keydown', (e) => {
+    if (secret.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeSecret(); }
+    if (e.key === 'Tab') { e.preventDefault(); closeSecretBtn.focus(); } // only one thing to focus in here
+  });
+
+  /* =========================================================
+     Little discoveries
+     ========================================================= */
+  $('#moon').addEventListener('click', () => whisper(['Still here?', 'Good. I saved your seat.'], 2600));
+  $('#reel').addEventListener('click', () =>
+    whisper(['Warning: continuing this drama may result in Cariño stealing more of your time.'], 5000));
+  tinyStar.addEventListener('click', () =>
+    whisper(['You found the little thing I almost hid.', 'I just wanted you here.'], 3000));
+
+  /* =========================================================
+     Music (never autoplays)
+     ========================================================= */
+  (function music() {
+    const audio = $('#bgm');
+    const btn = $('#musicBtn');
+    const label = $('.music-label', btn);
+    let fadeTimer = null;
+    let labelTimer = null;
+
+    audio.addEventListener('loadedmetadata', () => { btn.hidden = false; }, { once: true });
+    audio.src = CONFIG.musicFile;
+    audio.load();
+
+    function fadeTo(target, ms, done) {
+      clearInterval(fadeTimer);
+      const start = audio.volume;
+      const steps = Math.max(1, Math.round(ms / 50));
+      let i = 0;
+      fadeTimer = setInterval(() => {
+        i++;
+        audio.volume = Math.max(0, Math.min(1, start + (target - start) * (i / steps)));
+        if (i >= steps) { clearInterval(fadeTimer); done && done(); }
+      }, 50);
+    }
+
+    function setLabel(on) {
+      label.textContent = on ? 'Music: On' : 'Music: Off';
+      btn.setAttribute('aria-pressed', String(on));
+      btn.setAttribute('aria-label', on ? 'Music: on' : 'Music: off');
+      btn.classList.toggle('is-playing', on);
+      btn.classList.add('show-label');
+      clearTimeout(labelTimer);
+      labelTimer = setTimeout(() => btn.classList.remove('show-label'), 2400);
+    }
+
+    btn.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          audio.volume = 0;
+          await audio.play();
+          fadeTo(CONFIG.musicVolume, 1800);
+          setLabel(true);
+        } catch (e) {
+          setLabel(false);
+        }
+      } else {
+        setLabel(false);
+        fadeTo(0, 900, () => audio.pause());
+      }
+    });
+  })();
+
+  /* =========================================================
+     Begin
+     ========================================================= */
+  updateKeptNote();
+  setStage(0);
+  playOpening();
+  connectShared();
+})();
+
+</script>
+</body>
+</html>
